@@ -29,6 +29,22 @@ class Bot extends Discord.Client {
     }
   }
   
+  removeCategory() {
+    if (name in this.category) {
+      console.error(new Error("The category you're attempting to register already exists."));
+    } else {
+      if (this.CaseInsensitive) {
+        for(var i = 0; i< name.length; i++){
+          name[i] = name[i][0].toUpperCase() + name[i].slice(1);
+        }
+        
+        delete this.category[name];
+      } else {
+        delete this.category[name];
+      }
+    }
+  }
+  
   addCommand(commandClass) {
     if (!commandClass.category) {
       if (commandClass.name == null) {
@@ -75,11 +91,11 @@ class Bot extends Discord.Client {
           console.error(new Error("The command name you passed is already a command."));
           return False  
         }
-        this.category[commandClass.category.toLowerCase()][commandClass.name.toLowerCase()] = {};
-        this.category[commandClass.category.toLowerCase()][commandClass.name.toLowerCase()]['brief'] = commandClass.brief;
-        this.category[commandClass.category.toLowerCase()][commandClass.name.toLowerCase()]['description'] = commandClass.description;
-        this.category[commandClass.category.toLowerCase()][commandClass.name.toLowerCase()]['exec'] = commandClass.exec;
-        this.category[commandClass.category.toLowerCase()][commandClass.name.toLowerCase()]['usage'] = commandClass.usage;
+        this.category[commandClass.category][commandClass.name.toLowerCase()] = {};
+        this.category[commandClass.category][commandClass.name.toLowerCase()]['brief'] = commandClass.brief;
+        this.category[commandClass.category][commandClass.name.toLowerCase()]['description'] = commandClass.description;
+        this.category[commandClass.category][commandClass.name.toLowerCase()]['exec'] = commandClass.exec;
+        this.category[commandClass.category][commandClass.name.toLowerCase()]['usage'] = commandClass.usage;
       } else {
         if (commandClass.name in this.command) {
           console.error(new Error("The command name you passed is already a command."));
@@ -103,17 +119,68 @@ class Bot extends Discord.Client {
   removeCommand(commandName) {
     
     if (this.caseInsensitve) {
-      if (!commandClass.name.toLowerCase() in this.command) {
+      commands = []
+      this.category.keys().forEach(key => {
+        this.category[key]['commands'].keys().forEach(command => {
+          commands.push(command);
+        })
+      });
+      this.command.keys().forEach(command => {
+        commands.push(command);
+      });
+      
+      if (!commandName.toLowerCase() in commands) {
         console.error(new Error("The command name you passed is not already a command."));
         return False  
       }
-      delete this.command[commandName.toLowerCase()];
+      try{
+        delete this.command[commandName.toLowerCase()];
+      } catch {
+        this.category.keys().forEach(key => {
+          try {
+           delete this.category[key]['commands'][commandName.toLowerCase()];
+          } catch {
+            return;
+          }
+        }) 
+      }
     } else {
-      if (!commandClass.name in this.command) {
+      if (!commandClass.name in commands) {
         console.error(new Error("The command name you passed is not already a command."));
         return False  
       }
-      delete this.command[commandName] 
+      
+    } else {
+      commands = []
+      this.category.keys().forEach(key => {
+        this.category[key]['commands'].keys().forEach(command => {
+          commands.push(command);
+        })
+      });
+      this.command.keys().forEach(command => {
+        commands.push(command);
+      });
+      
+      if (!commandName in commands) {
+        console.error(new Error("The command name you passed is not already a command."));
+        return False  
+      }
+      try{
+        delete this.command[commandName];
+      } catch {
+        this.category.keys().forEach(key => {
+          try {
+           delete this.category[key]['commands'][commandName];
+          } catch {
+            return;
+          }
+        }) 
+      }
+    } else {
+      if (!commandClass.name in commands) {
+        console.error(new Error("The command name you passed is not already a command."));
+        return False  
+      }
     }
     
     return True
