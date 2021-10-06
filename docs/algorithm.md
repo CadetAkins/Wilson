@@ -22,7 +22,7 @@ P = k * (5-((i+j)/(200k/(i+j))))
 "Brownie Points", are an equal exchange algorithm. This means that the relationship between points gained as a winner, and lost as a loser are dichotomal. For example if winner `i`, has the exact same point value as loser `j`, that being 500, then they will both gain, or lose 2 points respectively.
 The gain or loss increases depending on the difference of the point values of i and j.
 
-## Simple Python Implimentation
+### Simple Python Implimentation
 
 ```py
 import typing, math
@@ -34,4 +34,14 @@ def points(
   k = int(math.sqrt(i + j))
   point_factor = 5-(i+j/((200 * k) - i + j))
   return (i + (k * point_factor), j - (k * point_factor)) # value[0] = i, value[1] = j
+```
+
+### Simple Javascript Implementation
+
+```js
+function points (i, j) Array {
+  var k = Math.sqrt(i + j) / 2;
+  var scoreFactor = 5-(i+j)/(200-((200 * k)/(i + j)));
+  return [i + (k*scoreFactor), j - (k*scoreFactor)]; // value[0] = 1, value[1] = j
+}
 ```
