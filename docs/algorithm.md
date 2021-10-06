@@ -27,6 +27,44 @@ P(i >= j) = ((√i+j)/2) * (5-((i+j)/(200-200((√i+j)/2)/(i+j))))
 "Brownie Points", are an equal exchange algorithm. This means that the relationship between points gained as a winner, and lost as a loser are dichotomal. For example if winner `i`, has the exact same point value as loser `j`, that being 500, then they will both gain, or lose 2 points respectively.
 The gain or loss increases depending on the difference of the point values of i and j.
 
+Now, lets run that step by step.
+
+1. Define Variables i & j
+
+> i, j = 500, 500
+
+2. Find s
+
+> k = (√500+500)/2
+> k = (31.6227766017)/2
+> k = 15.8113883009
+
+3. Find s
+
+> s = ((500 + 500)/(200-((200(15.8113883009))/(500+500))))
+> s = (1000/(200-(200-((200(15.8113883009))/1000))
+> s = (1000/200-(3162.27766018/1000))
+> s = (1000/(200-3.16227766018))
+> s = 1000/196.83772234
+> s = 5.08032702326
+
+4. Find P
+
+> P = k*|([s]-s)|
+> P = k*|(5-s)|
+> P = k*|-0.08032702326|
+> P = k*0.08032702326
+> P = 1.27008175582
+
+5. Subtract and Add Values Respectively
+
+> i = i+P
+> i = 501.27008175582
+
+> j = j-P
+> j = 498.729918244
+
+
 ### Simple Python Implimentation
 
 ```py
