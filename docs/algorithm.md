@@ -33,7 +33,7 @@ Now, lets run that step by step.
 
 > i, j = 500, 500
 
-2. Find s
+2. Find k
 
 > k = (√500+500)/2
 
