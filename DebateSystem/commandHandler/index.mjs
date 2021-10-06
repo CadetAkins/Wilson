@@ -5,11 +5,28 @@ const Discord = require("discord.js");
 class Bot extends Discord.Client {
   constructor(prefix = "!", description = "A discord bot.", name = "", caseInsensitive = true, ...args) {
     super([args]);
+    this.category = {};
     this.command = {};
     this.prefix - prefix;
     this.description=description;
     this.name=name;
     this.caseInsensitive = caseInsensitive;
+  }
+  
+  addCategory(name) {
+    if (name in this.category) {
+      console.error(new Error("The category you're attempting to register already exists."));
+    } else {
+      if (this.CaseInsensitive) {
+        for(var i = 0; i< name.length; i++){
+          name[i] = name[i][0].toUpperCase() + name[i].slice(1);
+        }
+        
+        this.category[name] = {};
+      } else {
+        this.category[name] = {};
+      }
+    }
   }
   
   addCommand(commandClass) {
@@ -40,6 +57,11 @@ class Bot extends Discord.Client {
         this.command[commandClass.name]['usage'] = commandClass.usage;
       }
     } else {
+      if (this.CaseInsensitive) {
+        for(var i = 0; i< commandClass.category.length; i++){
+         commandClass.category[i] = commandClass.category[i][0].toUpperCase() + commandClass.category[i].slice(1);
+        }
+      }
       if (!commandClass.category in this.category) {
         console.error(new Error("The category you provided in regsitering command '" + commandClass.name.toLowerCase() + "' does not exist. You may create one using the method commandHandler.Bot.addCategory()"));    
       }
