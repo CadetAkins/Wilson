@@ -13,31 +13,66 @@ class Bot extends Discord.Client {
   }
   
   addCommand(commandClass) {
-    if (commandClass.name == null) {
-      commandClass.setName(commandClass.exec.name);
+    if (!commandClass.category) {
+      if (commandClass.name == null) {
+        commandClass.setName(commandClass.exec.name);
+      }
+    
+      if (this.caseInsensitive) {
+        if (commandClass.name.toLowerCase() in this.command) {
+          console.error(new Error("The command name you passed is already a command."));
+          return False  
+        }
+        this.command[commandClass.name.toLowerCase()] = {};
+        this.command[commandClass.name.toLowerCase()]['brief'] = commandClass.brief;
+        this.command[commandClass.name.toLowerCase()]['description'] = commandClass.description;
+        this.command[commandClass.name.toLowerCase()]['exec'] = commandClass.exec;
+        this.command[commandClass.name.toLowerCase()]['usage'] = commandClass.usage;
+      } else {
+        if (commandClass.name in this.command) {
+          console.error(new Error("The command name you passed is already a command."));
+          return False  
+        }
+        this.command[commandClass.name] = {};
+        this.command[commandClass.name]['brief'] = commandClass.brief;
+        this.command[commandClass.name]['description'] = commandClass.description;
+        this.command[commandClass.name]['exec'] = commandClass.exec;
+        this.command[commandClass.name]['usage'] = commandClass.usage;
+      }
+    } else {
+      if (!commandClass.category in this.category) {
+        console.error(new Error("The category you provided in regsitering command '" + commandClass.name.toLowerCase() + "' does not exist. You may create one using the method commandHandler.Bot.addCategory()"));    
+      }
+      
+      if (commandClass.name == null) {
+        commandClass.setName(commandClass.exec.name);
+      }
+    
+      if (this.caseInsensitive) {
+        if (commandClass.name.toLowerCase() in this.command) {
+          console.error(new Error("The command name you passed is already a command."));
+          return False  
+        }
+        this.category[commandClass.category.toLowerCase()][commandClass.name.toLowerCase()] = {};
+        this.category[commandClass.category.toLowerCase()][commandClass.name.toLowerCase()]['brief'] = commandClass.brief;
+        this.category[commandClass.category.toLowerCase()][commandClass.name.toLowerCase()]['description'] = commandClass.description;
+        this.category[commandClass.category.toLowerCase()][commandClass.name.toLowerCase()]['exec'] = commandClass.exec;
+        this.category[commandClass.category.toLowerCase()][commandClass.name.toLowerCase()]['usage'] = commandClass.usage;
+      } else {
+        if (commandClass.name in this.command) {
+          console.error(new Error("The command name you passed is already a command."));
+          return False  
+        }
+        this.category[commandClass.category][commandClass.name] = {};
+        this.category[commandClass.category][commandClass.name]['brief'] = commandClass.brief;
+        this.category[commandClass.category][commandClass.name]['description'] = commandClass.description;
+        this.category[commandClass.category][commandClass.name]['exec'] = commandClass.exec;
+        this.category[commandClass.category][commandClass.name]['usage'] = commandClass.usage;
+      }
+    
     }
     
-    if (this.caseInsensitive) {
-      if (commandClass.name.toLowerCase() in this.command) {
-        console.error(new Error("The command name you passed is already a command."));
-        return False  
-      }
-      this.command[commandClass.name.toLowerCase()] = {};
-      this.command[commandClass.name.toLowerCase()]['brief'] = commandClass.brief;
-      this.command[commandClass.name.toLowerCase()]['description'] = commandClass.description;
-      this.command[commandClass.name.toLowerCase()]['exec'] = commandClass.exec;
-      this.command[commandClass.name.toLowerCase()]['usage'] = commandClass.usage;
-    } else {
-      if (commandClass.name in this.command) {
-        console.error(new Error("The command name you passed is already a command."));
-        return False  
-      }
-      this.command[commandClass.name] = {};
-      this.command[commandClass.name]['brief'] = commandClass.brief;
-      this.command[commandClass.name]['description'] = commandClass.description;
-      this.command[commandClass.name]['exec'] = commandClass.exec;
-      this.command[commandClass.name]['usage'] = commandClass.usage;
-    }
+   
     
     return True
     
@@ -79,11 +114,12 @@ class Bot extends Discord.Client {
 }
 
 class Command {
-  constuctor(name = null, brief = "", description = "", usage = "") {
+  constuctor(name = null, brief = "", description = "", usage = "", category=False) {
     this.name = name;
     this.brief=brief;
     this.description=description;
     this.usage=usage;
+    this.category=category;
   }
   
   setName(name) {
