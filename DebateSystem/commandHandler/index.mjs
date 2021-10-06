@@ -195,7 +195,7 @@ class Bot extends Discord.Client {
       }
       this.command.keys().forEach(name => {
         if (message.content.startsWith(name)) {
-          this.command[name]['exec'](message, this, ...message.content.replace(this.prefix, "").replace(this.commandName).strip().split(" "));
+          this.command[name]['exec'](message, ...message.content.replace(this.prefix, "").replace(this.commandName).strip().split(" "));
         }
       });
     }
