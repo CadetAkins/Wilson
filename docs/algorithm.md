@@ -33,6 +33,8 @@ Now, lets run that step by step.
 
 > i, j = 500, 500
 
+i and j are point score values for two players, where i is a winner and j is a loser. Their values are both equal at 500.
+
 2. Find k
 
 > k = (√500+500)/2
@@ -40,6 +42,8 @@ Now, lets run that step by step.
 > k = (31.6227766017)/2
 
 > k = 15.8113883009
+
+k is equal to half of the square root of the sum of i and j, in this case it is half the square root of 1000.
 
 3. Find s
 
@@ -55,6 +59,8 @@ Now, lets run that step by step.
 
 > s = 5.08032702326
 
+s is the Bradley-Terry point factor. Its essential to how we calculate our final score after k factor.
+
 4. Find P
 
 > P = k*|([s]-s)|
@@ -66,6 +72,8 @@ Now, lets run that step by step.
 > P = k*0.08032702326
 
 > P = 1.27008175582
+
+P is the equal exchange point value of each, we round s and subtract the initial value of s from our rounded value, and take its absolute value, the we multiply that value by our k factor to find our point exchange.
 
 5. Subtract and Add Values Respectively
 
