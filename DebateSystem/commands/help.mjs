@@ -2,13 +2,16 @@ import { Command } from "./commandHandler/index.mjs";
 const { MessageEmbed } = require("discord.js");
 
 class Help extends Command {
-  constructor(message, bot) {
-    this.message = message;
+  constructor(bot) {
     this.bot=bot;
     super("help", "Returns a list of commands.", "Returns a list of commands and descriptions.", "<command> optional.", "Help");
   }
-  
-  exec(command) {
+  //
+  exec(message, command = null) {
+    
+    if (!command === null) {
+      
+    }
     
     embeds = [];
     
