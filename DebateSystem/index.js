@@ -7,7 +7,8 @@ bot = Bot(
   "A discord debate system.",
   "Wilson",
   true
-);
+)
+.addCategory("Help");
 
 //load commands
 
@@ -17,12 +18,12 @@ commands = [
 
 commands.forEach(command => {
   bot.addCommand(command);
-})
+});
 
 bot.once('ready', () => {
   console.log("Wilson Debate System Online!");
-})
+});
 
 bot.on('message', (message) => {
   bot.parseCommands(message)
-})
+});
