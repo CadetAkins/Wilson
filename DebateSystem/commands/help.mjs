@@ -38,6 +38,7 @@ class Help extends Command {
       embed.addField(command, bot.command[command]['brief'], false);
     });
 
+    embeds.push(embed);
     
     this.channel.send(
       {
