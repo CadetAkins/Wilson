@@ -2,7 +2,9 @@ import { Bot } from "./commandHandler/index.mjs";
 
 const { MessageEmbed } = require("discord.js");
 
+//import command classes
 import { Help } from "./commands/help.mjs";
+import { Formats } from "./commands/formats.mjs";
 
 debateChannels = [
   894244610866577428
@@ -14,12 +16,14 @@ bot = Bot(
   "Wilson",
   true
 )
-.addCategory("Help");
+.addCategory("Help")
+.addCategory("Debate");
 
 //load commands
 
 commands = [
-  Help(bot);
+  Help(bot),
+  Formats(bot)
 ];
 
 commands.forEach(command => {
