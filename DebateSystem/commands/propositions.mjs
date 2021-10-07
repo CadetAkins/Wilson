@@ -1,6 +1,9 @@
 import { Command } from "./commandHandler/index.mjs";
 const { MessageEmbed } = require("discord.js");
 
+//get https for making api calls to python database
+const axios = require('axios')
+
 setTopics = {};
 
 class Proposition extends Command {
@@ -79,5 +82,63 @@ class GetProposition extends Command {
       embeds: [embed]
       }
     );
+  }
+}
+
+class Debate extends Command {
+  constructor(bot) {
+    this.bot=bot;
+    super("debate", "Debates a given user.", "Begins the selection process for judges in a debate, and begins the debate in the given format thereafter", "<format:" + bot.prefix "formats> <number of judges: integer>");
+  }
+  
+  exec(message, member, format, numberOfJudges) {
+    //check for errors
+    if (numberofJudges > 10) {
+      throw new Error("You may only have a maximum of 10 judges.");
+    }
+    
+    if (!message.channel.id in setTopics) {
+      throw new Error("A topic is not set for the channel you're in.");
+    }
+    
+    if (member.id == message.member.id) {
+      throw new Error("You cannot debate against yourself.");
+    }
+    
+    members = [];
+    points = {};
+    
+    members.push(member);
+    members.push(message.member.id);
+    
+    //get both member's elos
+    
+    members.forEach(m => {
+      axios
+      .post('https://database.marleyakins.repl.co/get_elo', {
+        id: m.id
+      })
+      .then(res => {
+        points[m.id] = res.data.elo;
+      })
+      .catch(error => {
+        throw error;// a bit redunant but necessary nonetheless
+      })
+    });
+    
+    const embed = new MessageEmbed()
+    .setTitle("Debate Request")
+    .setDescription(member + " " + message.member + " wants to debate you on" + " " + setTopics[message.channel.id]['topic'] + " Do you accept?")
+    .setColor("#f5ef42")
+    .addField(member, points[member.id], false)
+    .addField(message.member, points[message.member.id], false);
+    
+    message.channel.send(
+      {
+      embeds: [embed]
+      }
+    );
+    
+    //add acceptance an judging and blah blah blah here
   }
 }
