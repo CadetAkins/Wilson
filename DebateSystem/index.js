@@ -5,6 +5,7 @@ const { MessageEmbed } = require("discord.js");
 //import command classes
 import { Help } from "./commands/help.mjs";
 import { Formats } from "./commands/formats.mjs";
+import { Proposition, RemoveProposition, GetProposition } from "./commands/propositions.mjs"
 
 debateChannels = [
   894244610866577428
@@ -23,7 +24,10 @@ bot = Bot(
 
 commands = [
   Help(bot),
-  Formats(bot)
+  Formats(bot),
+  Proposition(bot),
+  RemoveProposition(bot),
+  GetProposition(bot)
 ];
 
 commands.forEach(command => {
