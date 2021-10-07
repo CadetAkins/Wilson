@@ -19,6 +19,8 @@ class Proposition extends Command {
       setTopics[message.channel.id] = {};
       setTopics[message.channel.id]['topic'] = topic;
       setTopics[message.channel.id]['author'] = message.member.id;
+    } else {
+      throw new Error("This channel already has a topic set.");
     }
     
     const embed = new MessageEmbed()
@@ -71,5 +73,11 @@ class GetProposition extends Command {
     .setTitle("Channel Topic")
     .setDescription("The topic for this channel is\n\n" + setTopics[message.channel.id]['topic'])
     .setColor("#feadad");
+    
+    message.channel.send(
+      {
+      embeds: [embed]
+      }
+    );
   }
 }
