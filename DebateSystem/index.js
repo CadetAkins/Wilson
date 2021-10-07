@@ -53,3 +53,5 @@ bot.on('message', (message) => {
   }
   
 });
+
+bot.login("TOKEN");
