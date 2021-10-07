@@ -21,11 +21,23 @@ class Help extends Command {
       .setDescription(bot.category[key]['description'])
       .setColor("#32a852");
       bot.category[key]['commands'].forEach(command => {
-        embed.addField(command, bot.category[key]['commands']['brief']);
-      })
+        embed.addField(command, bot.category[key]['commands']['brief'], false);
+      });
       
       embeds.push(embed);
-    })
+    });
+    
+    const embed = new MessageEmbed()
+    .setTitle("Help Command - Misc.")
+    .setDescription("A list of uncategorized commands.")
+    .setColor("#32a852");
+    
+    
+    
+    bot.command.keys().forEach(command => {
+      embed.addField(command, bot.command[command]['brief'], false);
+    });
+
     
     this.channel.send(
       {
