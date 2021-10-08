@@ -122,11 +122,11 @@ class Debate extends Command {
     
     members.forEach(m => {
       axios
-      .post('https://database.marleyakins.repl.co/get_elo', {
+      .post('https://database.marleyakins.repl.co/get_points', {
         id: m.id
       })
       .then(res => {
-        points[m.id] = res.data.elo;
+        points[m.id] = res.data.points;
       })
       .catch(error => {
         throw error;// a bit redunant but necessary nonetheless
