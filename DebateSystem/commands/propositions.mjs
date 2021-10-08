@@ -259,7 +259,7 @@ class Debate extends Command {
       if (reaction.emoji.name == "🅰️") {
         aff++;
       } else {
-        neg--
+        neg--;
       }
     }).catch((reaction, user) => {
       if (aff > neg) {
