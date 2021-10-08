@@ -4,6 +4,9 @@ const { MessageEmbed } = require("discord.js");
 //get https for making api calls to python database
 const axios = require('axios')
 
+//import lodash utils
+var _ = require('lodash');
+
 setTopics = {};
 
 class Proposition extends Command {
