@@ -8,9 +8,12 @@
 }"></img></a>
 </p>
 
-<a href="https://discord.gg/UgAPD6CsSg">
+<p align="center">
+          <a href="https://discord.gg/UgAPD6CsSg">
         <img src="https://user-images.githubusercontent.com/82357502/134057791-f9996005-b1be-47b1-8ab3-d685cf1dd905.png" alt="Bot invite"/>
 </a>
+  </p>
+                                                                                                                                         
 
 <hr>
 
