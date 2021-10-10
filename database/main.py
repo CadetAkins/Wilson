@@ -28,3 +28,24 @@ def get_points():
   return flask.jsonify({
     'points': points
   })
+
+
+@app.route("/set_value"
+           methods=['GET', 'POST']
+)
+def set_value():
+  token = flask.request.headers.get("TOKEN")
+  
+  if token not in db["tokens"]:
+    return jsonify({
+      "status": 401
+    })
+  data = flak.request.json
+  key = data["key"]
+  value = data["value"]
+  
+  db[key] = [value]
+  
+  return flask.jsonify({
+    'status': 200
+  })
